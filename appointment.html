@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Appointment</title>
+</head>
+<body>
+    <h1>Appointment booking app</h1>
+   <form id="container">
+       <label>name: </label>
+       <input type="text" id="name" name="name">
+       <label>email: </label>
+       <input type="email" id="email" name="email">
+       <label>phone number: </label>
+       <input type="number" id="number" name="number">
+       <button>Submit</button> 
+   </form> 
+   <ul id="item_list"></ul>
+   <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+   <script>
+        axios.get("https://crudcrud.com/api/8cb3eedf12074cdb994b2a90341719cd/Appointment_Project")
+           .then((res)=>console.log(res.data))
+           .catch(err=>console.error(err));
+
+       document.getElementById('container')
+       .addEventListener('submit',addUser);
+
+       function addUser(event){
+           event.preventDefault();
+           var name=event.target.name.value;
+           var email=event.target.email.value;
+           var phoneNumber=event.target.number.value;
+           
+           const obj={name,email,phoneNumber};
+
+           axios.post("https://crudcrud.com/api/8cb3eedf12074cdb994b2a90341719cd/Appointment_Project",obj)
+           .then((res)=>showResponse(res.data))
+           .catch(err=>console.error(err));
+       }
+
+       function showResponse(res){
+           let list=document.createElement('li');
+           list.innerHTML=`${res.name} , ${res.email} , ${res.phoneNumber}`;
+           let deleteBtn=document.createElement('button');
+           deleteBtn.appendChild(document.createTextNode('DELETE'));
+           deleteBtn.id='delete';
+           deleteBtn.className='deleted';
+           let editBtn=document.createElement('button');
+           editBtn.appendChild(document.createTextNode('EDIT'));
+           editBtn.id='edit';
+           editBtn.className='edited';
+           list.appendChild(deleteBtn);
+           list.appendChild(editBtn);
+
+           var displayList=document.getElementById('item_list');
+           displayList.appendChild(list);
+
+       }
+   </script>
+</body>
+</html>

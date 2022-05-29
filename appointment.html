@@ -55,21 +55,38 @@
            list.innerHTML=`${res.name} , ${res.email} , ${res.phoneNumber}`;
            let deleteBtn=document.createElement('button');
            deleteBtn.appendChild(document.createTextNode('DELETE'));
-           deleteBtn.id='delete';
+           deleteBtn.id=res._id;
            deleteBtn.className='deleted';
            let editBtn=document.createElement('button');
            editBtn.appendChild(document.createTextNode('EDIT'));
-           editBtn.id='edit';
+           editBtn.id=res._id;
            editBtn.className='edited';
            list.appendChild(deleteBtn);
            list.appendChild(editBtn);
 
            var displayList=document.getElementById('item_list');
            displayList.appendChild(list);
-
+       
        }
 
-      
-   </script>
+       document.getElementById('item_list')
+       .addEventListener('click',delete_OR_edit);
+
+       function delete_OR_edit(event){
+           if(event.target.classList.contains('deleted')){
+                axios.delete(`https://crudcrud.com/api/8cb3eedf12074cdb994b2a90341719cd/Appointment_Project/${event.target.id}`)
+                .then((res)=>refreshPage())
+                .catch(err=>console.error(err));
+           }
+           if(event.target.classList.contains('edited')){
+                  console.log(event.target.id);
+           }
+       }
+
+       function refreshPage(res){
+           window.location.reload();
+           console.log(res)
+       }
+   </script> 
 </body>
 </html>

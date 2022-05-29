@@ -20,9 +20,19 @@
    <ul id="item_list"></ul>
    <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
    <script>
-        axios.get("https://crudcrud.com/api/8cb3eedf12074cdb994b2a90341719cd/Appointment_Project")
-           .then((res)=>console.log(res.data))
+   
+        window.addEventListener('DOMContentLoaded',()=>{
+            axios.get("https://crudcrud.com/api/8cb3eedf12074cdb994b2a90341719cd/Appointment_Project")
+           .then((res)=>{
+            for(let i=0;i<res.data.length;i++){
+                showResponse(res.data[i]);
+            }   
+            console.log(res)})
            .catch(err=>console.error(err));
+
+
+        })
+        
 
        document.getElementById('container')
        .addEventListener('submit',addUser);
@@ -58,6 +68,8 @@
            displayList.appendChild(list);
 
        }
+
+      
    </script>
 </body>
 </html>
